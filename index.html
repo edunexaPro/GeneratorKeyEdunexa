@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keygen EDUNEXA (Dual)</title>
+    <title>Keygen EDUNEXA (Smart)</title>
     <style>
         body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 10px; }
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
         input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 14px; text-align: center; }
-        .result-box { margin-bottom: 20px; }
         .result { background: #e7f3ff; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 1.2rem; color: #007bff; border: 1px solid #cce5ff; margin-bottom: 5px; }
         .btn-wa { background: #25D366; color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
     </style>
@@ -16,42 +15,39 @@
 <body>
 
 <div class="card">
-    <h3>EDUNEXA KEYGEN (DUAL)</h3>
+    <h3>EDUNEXA KEYGEN</h3>
     
-    <!-- Input 1 -->
-    <input type="text" id="id1" placeholder="PASTE ID EDUNEXA" oninput="updateAll()">
-    <div class="result-box">
-        <div class="result" id="res1">-</div>
-    </div>
+    <!-- Kolom 1: Untuk Aplikasi Utama -->
+    <input type="text" id="id1" placeholder="ID PERANGKAT (EDU)" oninput="updateAll()">
+    <div class="result" id="res1">-</div>
 
-    <!-- Input 2 -->
-    <input type="text" id="id2" placeholder="PASTE ID INPUT EDUNEXA" oninput="updateAll()">
-    <div class="result-box">
-        <div class="result" id="res2">-</div>
-    </div>
+    <!-- Kolom 2: Untuk Input Nilai -->
+    <input type="text" id="id2" placeholder="ID PERANGKAT (INP)" oninput="updateAll()">
+    <div class="result" id="res2">-</div>
 
     <button class="btn-wa" onclick="kirimWA()">Kirim WA</button>
 </div>
 
 <script>
-    // Rumus yang sama dengan aplikasi utama
     const SALT = 1205; 
-    const PREFIX = "EDU";
     const SUFFIX = "FTY";
 
-    function calculate(id) {
+    // Fungsi generate dengan prefix berbeda
+    function calculate(id, prefix) {
         if (!id || id.length === 0) return "-";
         let cleanId = id.replace(/\s/g, '').toUpperCase();
         let totalASCII = 0;
         for (let i = 0; i < cleanId.length; i++) {
             totalASCII += cleanId.charCodeAt(i);
         }
-        return PREFIX + (totalASCII * SALT) + SUFFIX;
+        return prefix + (totalASCII * SALT) + SUFFIX;
     }
 
     function updateAll() {
-        document.getElementById('res1').innerText = calculate(document.getElementById('id1').value);
-        document.getElementById('res2').innerText = calculate(document.getElementById('id2').value);
+        // Kolom 1 menggunakan prefix EDU
+        document.getElementById('res1').innerText = calculate(document.getElementById('id1').value, "EDU");
+        // Kolom 2 menggunakan prefix INP
+        document.getElementById('res2').innerText = calculate(document.getElementById('id2').value, "INP");
     }
 
     function kirimWA() {
@@ -63,9 +59,14 @@
             return;
         }
 
-        let pesan = "Halo, ini kode aktivasi EDUNEXA Anda:\n\n";
-        if (key1 !== "-") pesan += "Kode Edunexa: " + key1 + "\n";
-        if (key2 !== "-") pesan += "Kode Input Edunexa: " + key2 + "\n";
+        let pesan = "Halo, berikut Kode Aktivasi EDUNEXA Anda:\n\n";
+        
+        if (key1 !== "-") {
+            pesan += "Kode Utama: " + key1 + "\n";
+        }
+        if (key2 !== "-") {
+            pesan += "Kode Input: " + key2 + "\n";
+        }
         
         window.location.href = "whatsapp://send?text=" + encodeURIComponent(pesan);
     }

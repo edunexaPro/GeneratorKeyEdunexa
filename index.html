@@ -19,13 +19,13 @@
     <h3>EDUNEXA KEYGEN (DUAL)</h3>
     
     <!-- Input 1 -->
-    <input type="text" id="id1" placeholder="PASTE ID LAPTOP 1" oninput="updateAll()">
+    <input type="text" id="id1" placeholder="PASTE ID EDUNEXA" oninput="updateAll()">
     <div class="result-box">
         <div class="result" id="res1">-</div>
     </div>
 
     <!-- Input 2 -->
-    <input type="text" id="id2" placeholder="PASTE ID LAPTOP 2" oninput="updateAll()">
+    <input type="text" id="id2" placeholder="PASTE ID INPUT EDUNEXA" oninput="updateAll()">
     <div class="result-box">
         <div class="result" id="res2">-</div>
     </div>
@@ -64,8 +64,8 @@
         }
 
         let pesan = "Halo, ini kode aktivasi EDUNEXA Anda:\n\n";
-        if (key1 !== "-") pesan += "Kode 1: " + key1 + "\n";
-        if (key2 !== "-") pesan += "Kode 2: " + key2 + "\n";
+        if (key1 !== "-") pesan += "Kode Edunexa: " + key1 + "\n";
+        if (key2 !== "-") pesan += "Kode Input Edunexa: " + key2 + "\n";
         
         window.location.href = "whatsapp://send?text=" + encodeURIComponent(pesan);
     }

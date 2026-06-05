@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keygen EDUNEXA (Smart)</title>
+    <title>Keygen EDUNEXA (Smart Extract)</title>
     <style>
         body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 10px; }
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
         input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 14px; text-align: center; }
         .result { background: #e7f3ff; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 1.2rem; color: #007bff; border: 1px solid #cce5ff; margin-bottom: 5px; }
         .btn-wa { background: #25D366; color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .hint { font-size: 11px; color: #666; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
 <div class="card">
     <h3>EDUNEXA KEYGEN</h3>
+    <p class="hint">Bisa langsung paste pesan lengkap!</p>
     
-    <!-- Kolom 1: Untuk Aplikasi Utama -->
-    <input type="text" id="id1" placeholder="ID PERANGKAT (EDU)" oninput="updateAll()">
+    <input type="text" id="id1" placeholder="PASTE PESAN UTAMA" oninput="updateAll()">
     <div class="result" id="res1">-</div>
 
-    <!-- Kolom 2: Untuk Input Nilai -->
-    <input type="text" id="id2" placeholder="ID PERANGKAT (INP)" oninput="updateAll()">
+    <input type="text" id="id2" placeholder="PASTE PESAN INPUT" oninput="updateAll()">
     <div class="result" id="res2">-</div>
 
     <button class="btn-wa" onclick="kirimWA()">Kirim WA</button>
@@ -30,12 +30,21 @@
 
 <script>
     const SALT = 1205; 
+    const PREFIX = "EDU";
     const SUFFIX = "FTY";
 
-    // Fungsi generate dengan prefix berbeda
-    function calculate(id, prefix) {
-        if (!id || id.length === 0) return "-";
-        let cleanId = id.replace(/\s/g, '').toUpperCase();
+    // Fungsi pintar: mencari pola DX-XXXX di dalam teks
+    function extractId(text) {
+        if (!text) return "";
+        // Mencari pola DX- diikuti huruf/angka
+        const match = text.match(/DX-[A-Z0-9]+/i);
+        return match ? match[0] : text; // Jika ketemu, ambil ID-nya, jika tidak, ambil semua teksnya
+    }
+
+    function calculate(rawInput, prefix) {
+        let cleanId = extractId(rawInput).replace(/\s/g, '').toUpperCase();
+        if (cleanId.length === 0) return "-";
+        
         let totalASCII = 0;
         for (let i = 0; i < cleanId.length; i++) {
             totalASCII += cleanId.charCodeAt(i);
@@ -44,9 +53,7 @@
     }
 
     function updateAll() {
-        // Kolom 1 menggunakan prefix EDU
         document.getElementById('res1').innerText = calculate(document.getElementById('id1').value, "EDU");
-        // Kolom 2 menggunakan prefix INP
         document.getElementById('res2').innerText = calculate(document.getElementById('id2').value, "INP");
     }
 
@@ -60,13 +67,8 @@
         }
 
         let pesan = "Halo, berikut Kode Aktivasi EDUNEXA Anda:\n\n";
-        
-        if (key1 !== "-") {
-            pesan += "Kode Utama: " + key1 + "\n";
-        }
-        if (key2 !== "-") {
-            pesan += "Kode Input: " + key2 + "\n";
-        }
+        if (key1 !== "-") pesan += "Kode Utama: " + key1 + "\n";
+        if (key2 !== "-") pesan += "Kode Input: " + key2 + "\n";
         
         window.location.href = "whatsapp://send?text=" + encodeURIComponent(pesan);
     }
